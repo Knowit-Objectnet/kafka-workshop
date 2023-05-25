@@ -1,5 +1,11 @@
+import no.knowit.kafkaworkshop.avro.ExtendedProduct
+import no.knowit.kafkaworkshop.avro.Product
+import org.apache.kafka.clients.consumer.KafkaConsumer
+import org.apache.kafka.clients.producer.KafkaProducer
+import org.apache.kafka.clients.producer.ProducerRecord
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.time.Duration
 
 /**
  * Basic Kafka Producer and Consumer
@@ -17,5 +23,31 @@ import org.slf4j.LoggerFactory
 fun main() {
     val logger: Logger = LoggerFactory.getLogger("main")
 
+    val kafkaConsumer = KafkaConsumer<Long, Product>(consumerConfig("exercise-2"))
+    val kafkaProducer = KafkaProducer<Long, ExtendedProduct>(producerConfig())
 
+    kafkaConsumer.subscribe(listOf("products"))
+
+    kafkaConsumer.use { kc ->
+        while (true) {
+            val records = kc.poll(Duration.ofMillis(500))
+
+            records.forEach { record ->
+                val product = record.value()
+
+                val extendedProduct = ExtendedProduct(
+                    product.id,
+                    product.name,
+                    "${product.brand} ${product.name} ${product.storage}GB (${product.finish})",
+                    product.brand,
+                    product.generation,
+                    product.finish,
+                    product.storage,
+                    product.prices
+                )
+
+                kafkaProducer.send(ProducerRecord("extended_products", record.key(), extendedProduct))
+            }
+        }
+    }
 }

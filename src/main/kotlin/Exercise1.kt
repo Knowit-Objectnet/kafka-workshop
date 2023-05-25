@@ -1,5 +1,10 @@
+import no.knowit.kafkaworkshop.avro.Product
+import org.apache.kafka.clients.consumer.KafkaConsumer
+import org.apache.kafka.clients.producer.KafkaProducer
+import org.apache.kafka.clients.producer.ProducerRecord
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
+import java.time.Duration
 
 /**
  * Basic Kafka Producer and Consumer
@@ -18,5 +23,29 @@ import org.slf4j.LoggerFactory
  */
 fun main() {
     val logger: Logger = LoggerFactory.getLogger("main")
+
+    val kafkaConsumer = KafkaConsumer<Long, Product>(consumerConfig("exercise-1"))
+    val kafkaProducer = KafkaProducer<Long, Product>(producerConfig())
+
+    kafkaConsumer.subscribe(listOf("products"))
+
+    kafkaConsumer.use { kc ->
+        while (true) {
+            val records = kc.poll(Duration.ofMillis(500))
+
+            records.forEach { record ->
+                val product = record.value()
+
+                logger.info("Received record")
+
+                if(!product.prices.containsKey("EUR")) {
+                    product.prices["EUR"] = (product.prices["NOK"]!! * 0.1).toLong()
+
+                    kafkaProducer.send(ProducerRecord(record.topic(), record.key(), product))
+                    logger.info("Updated price for product ${product.id} to ${product.prices["EUR"]}")
+                }
+            }
+        }
+    }
 
 }

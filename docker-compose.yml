@@ -58,6 +58,7 @@ services:
 
       echo -e 'Creating kafka topics'
       kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists --topic products --replication-factor 1 --partitions 1 --config 'cleanup.policy=compact' --config 'delete.retention.ms=100' --config 'segment.ms=100' --config 'min.cleanable.dirty.ratio=0.01'
+      kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists --topic extended_products --replication-factor 1 --partitions 1 --config 'cleanup.policy=compact' --config 'delete.retention.ms=100' --config 'segment.ms=100' --config 'min.cleanable.dirty.ratio=0.01'
       kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists --topic user_signups --replication-factor 1 --partitions 1
       kafka-topics --bootstrap-server kafka:29092 --create --if-not-exists --topic purchased_products --replication-factor 1 --partitions 1
 
