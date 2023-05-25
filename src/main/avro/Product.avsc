@@ -1,0 +1,46 @@
+{
+  "name": "Product",
+  "namespace": "no.knowit.kafkaworkshop.avro",
+  "type": "record",
+  "fields" : [
+    {
+      "name" : "id",
+      "type" : "long",
+      "doc" : ""
+    },
+    {
+      "name" : "name",
+      "type" : "string",
+      "doc" : ""
+    },
+    {
+      "name" : "brand",
+      "type" : "string",
+      "doc" : ""
+    },
+    {
+      "name" : "generation",
+      "type" : "long",
+      "doc" : ""
+    },
+    {
+      "name" : "finish",
+      "type" : "string",
+      "doc" : ""
+    },
+    {
+      "name" : "storage",
+      "type" : "long",
+      "doc" : ""
+    },
+    {
+      "name": "prices",
+      "type": {
+        "type": "map",
+        "values" : "long",
+        "default": {}
+      },
+      "doc": ""
+    }
+  ]
+}

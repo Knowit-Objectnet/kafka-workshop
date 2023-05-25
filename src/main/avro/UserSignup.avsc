@@ -1,0 +1,37 @@
+{
+  "name": "UserSignup",
+  "namespace": "no.knowit.kafkaworkshop.avro",
+  "type": "record",
+  "fields" : [
+    {
+      "name" : "timestamp",
+      "type" : "string",
+      "doc" : ""
+    },
+    {
+      "name" : "userId",
+      "type" : "long",
+      "doc" : ""
+    },
+    {
+      "name" : "firstName",
+      "type" : "string",
+      "doc" : ""
+    },
+    {
+      "name" : "lastName",
+      "type" : "string",
+      "doc" : ""
+    },
+    {
+      "name" : "email",
+      "type" : "string",
+      "doc" : ""
+    },
+    {
+      "name" : "country",
+      "type" : "string",
+      "doc" : ""
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "name": "PurchasedProduct",
+  "namespace": "no.knowit.kafkaworkshop.avro",
+  "type": "record",
+  "fields" : [
+    {
+      "name" : "timestamp",
+      "type" : "string",
+      "doc" : ""
+    },
+    {
+      "name" : "orderId",
+      "type" : "long",
+      "doc" : ""
+    },
+    {
+      "name" : "productId",
+      "type" : "long",
+      "doc" : ""
+    },
+    {
+      "name" : "userId",
+      "type" : "long",
+      "doc" : ""
+    },
+    {
+      "name" : "price",
+      "type" : "long",
+      "doc" : ""
+    },
+    {
+      "name" : "currency",
+      "type" : "string",
+      "doc" : ""
+    }
+  ]
+}
